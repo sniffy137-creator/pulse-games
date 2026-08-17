@@ -1,0 +1,17 @@
+{
+  "name": "pulse-games-api",
+  "version": "0.2.0",
+  "description": "Pulse Games API — PostgreSQL + JWT auth",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "db:init": "node src/init-db.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "pg": "^8.13.1"
+  }
+}

@@ -1,0 +1,24 @@
+CREATE TABLE IF NOT EXISTS users (
+  id SERIAL PRIMARY KEY,
+  username VARCHAR(64) UNIQUE NOT NULL,
+  password_hash TEXT NOT NULL,
+  email VARCHAR(255),
+  balance NUMERIC(18, 2) NOT NULL DEFAULT 1000,
+  is_admin BOOLEAN NOT NULL DEFAULT false,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS bets (
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER NOT NULL REFERENCES users(id),
+  game VARCHAR(32) NOT NULL,
+  bet NUMERIC(18, 2) NOT NULL,
+  mult NUMERIC(18, 4),
+  win NUMERIC(18, 2) NOT NULL DEFAULT 0,
+  meta JSONB,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_bets_user ON bets(user_id);
+CREATE INDEX IF NOT EXISTS idx_bets_created ON bets(created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_bets_game ON bets(game);
